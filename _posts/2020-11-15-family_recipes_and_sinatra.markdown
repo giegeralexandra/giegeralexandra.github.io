@@ -1,7 +1,7 @@
 ---
 layout: post
-title:      "Family Recipes and Sinatra "
-date:       2020-11-15 21:46:52 +0000
+title:      "Family Recipes and Sinatra  "
+date:       2020-11-15 16:46:53 -0500
 permalink:  family_recipes_and_sinatra
 ---
 
