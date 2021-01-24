@@ -1,7 +1,7 @@
 ---
 layout: post
-title:      "BeautyMe Rails Application "
-date:       2021-01-24 17:08:13 +0000
+title:      "BeautyMe Rails Application  "
+date:       2021-01-24 12:08:14 -0500
 permalink:  beautyme_rails_application
 ---
 
