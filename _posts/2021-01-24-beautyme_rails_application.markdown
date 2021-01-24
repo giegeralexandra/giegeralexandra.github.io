@@ -113,7 +113,7 @@ class Appointment < ApplicationRecord
     belongs_to :customer
     belongs_to :user
     belongs_to :category 
-		```
+```
 
 These associations, of course, performed additional magic and added more logic to the models. Additional methods were provided through these relationships. Category objects can now call a method .appointments to see all Appointments associated with the Category. User objects can now call a method .categories to view all Categories associated with the User. 
 
