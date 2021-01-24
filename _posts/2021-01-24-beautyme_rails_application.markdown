@@ -119,14 +119,16 @@ These associations, of course, performed additional magic and added more logic t
 
 To guarantee the objects created in the application do not persist to the database if not valid, I created validations in the models. 
 
-```
+
 User 
+```
     validates :first_name, :last_name, {:length => { :maximum => 12, :minimum => 2}}
     validates_uniqueness_of :email, { case_sensitive: false }
 ```
 		
-```
+
 Customer 
+```
     validates :first_name, :last_name, :email, :phone_number, presence: true 
     validates :first_name, :last_name, {:length => { :maximum => 12, :minimum => 2}}
     validates :email, uniqueness: { case_sensitive: false }
@@ -134,18 +136,18 @@ Customer
     validates :phone_number, numericality: { only_integer: true }
  ``` 
  
-```
-Appointments 
 
+Appointments 
+```
    validates :name, :start_time, :end_time, :price, :customer_id, :category_id, presence: true 
     validates :name, {:length => { :maximum => 20, :minimum => 2}}
     validate :appointment_date_cannot_be_in_the_past, :appointment_end_time_cannot_be_before_start_time, :no_appointments_overlap
 ```
 
 
-```
-Category 
 
+Category
+```
     validates :name, presence: true 
     validates :name, {:length => { :maximum => 12, :minimum => 2}}
     validate :uniqueness_of_category_per_user 
@@ -157,32 +159,32 @@ Appointment times needed to be in the future, end time could not be before start
 
 ```
 def appointment_date_cannot_be_in_the_past
-        if start_time.present? && start_time < Date.today
+      if start_time.present? && start_time < Date.today
           errors.add(:date, "can't be in the past")
-        end
+      end
 end
 ```
 
 ```
 def appointment_end_time_cannot_be_before_start_time
-        if start_time.present? && end_time.present? && end_time < start_time 
+      if start_time.present? && end_time.present? && end_time < start_time 
             errors.add(:end_time, "can't be before start time")
-        end
+      end
 end
 ```
 
 In order to control the routes and views in BeautyMe, I created a controller file and a view folder for each model. I then added basic controller routes to the config/routes file using resources :controller_name. After doing so, I added multiple custom routes to the config/routes file to provide the user with access to sign up, login, logout. I associated them with the correct controller action. 
 
-  ```
-	root 'sessions#home'
-  get '/signup' => 'users#new'
-  post '/signup' => 'users#create'
-  get '/auth/facebook/callback' => 'sessions#facebook'
-  get '/login' => 'sessions#new'
-  post '/login' => 'sessions#create'
-  delete '/logout' => 'sessions#destroy'
-  delete '/users/:id' => 'users#delete'
-	```
+```
+root 'sessions#home'
+get '/signup' => 'users#new'
+post '/signup' => 'users#create'
+get '/auth/facebook/callback' => 'sessions#facebook'
+get '/login' => 'sessions#new'
+post '/login' => 'sessions#create'
+delete '/logout' => 'sessions#destroy'
+delete '/users/:id' => 'users#delete'
+```
  
 To give the User additional login options, I used the Oauth and Dotenv gems. These allowed the use of an Facebook Developer Account to create the option for a User to sign in/signup via their Facebook credentials. 
 
@@ -191,19 +193,19 @@ When creating the sign up and login page, I used the Bcrypt gem to assist with p
 To help the controllers and views easily access the current_user, I created the below helper methods in the application_helper.rb file. I called on the redirect_if_not_logged_in method in the Appointments, Customers, and Categories controllers to confirm the User was logged in prior to giving access and displaying information. 
 
 
-   ``` 
-	 def current_user 
-        @current_user ||= User.find_by(id: session[:user_id]) 
-    end
+``` 
+def current_user 
+      @current_user ||= User.find_by(id: session[:user_id]) 
+end
 
-    def logged_in?
-        !!session[:user_id]
-    end
+def logged_in?
+      !!session[:user_id]
+end
 
-    def redirect_if_not_logged_in 
-        redirect_to root_path if !logged_in?
-    end 
-		```
+def redirect_if_not_logged_in 
+      redirect_to root_path if !logged_in?
+end 
+```
 
 
 
@@ -213,21 +215,21 @@ When creating the Appointment form, I used a partial form. A partial form provid
 
 If there is a validation error for any of the three objects, the page will render the :new view and display all the errors. If the objects have no errors and a new customer or category is created, these attributes are stored in nested hashes. In Rails, you may use a method accepts_nested_attributes_for but, it does not check for duplicates. Therefore, I had to create custom methods inside the Appointment model to confirm the nested attributes would be created. The methods below check to validate the fields are not blank. If the fields are not blank, the methods call the .find_or_create_by method. This method either finds and assigns an object or will create if no object is found. The method then assigns the Appointment’s :customer_id with the new Customer :id to complete the association. 
 
- ``` 
- def customer_attributes=(attr)
-        if attr[:first_name] != ""
+``` 
+def customer_attributes=(attr)
+      if attr[:first_name] != ""
             customer = Customer.find_or_create_by(first_name: attr[:first_name], last_name: attr[:last_name], email: attr[:email], phone_number: attr[:phone_number], user_id: self.user_id) 
             self.customer_id = customer.id
-        end
+      end
 end
 ```
 
 ```
 def category_attributes=(attr)
-        if attr[:name] != ""
+      if attr[:name] != ""
             category = Category.find_or_create_by(name: attr[:name], user_id: self.user_id) 
             self.category_id = category.id
-        end
+      end
 end
 ```
 
@@ -236,12 +238,12 @@ The above methods are called on because of the below .build method in the Appoin
 
 ```
 def create 
-        appointment = current_user.appointments.build(appointment_params)
-        if appointment.save
+      appointment = current_user.appointments.build(appointment_params)
+      if appointment.save
             redirect_to appointment_path(appointment)
-        else 
+      else 
             render :new 
-        end       
+      end       
 end
 ```
 
@@ -250,8 +252,8 @@ In order for the customer_attributes= and category_attributes= to be included in
 ```  
 private 
 
- def appointment_params
-        params.require(:appointment).permit(:name, :start_time, :end_time, :price, :customer_id, :category_id, :user_id, :customer_attributes => [:first_name, :last_name, :email, :phone_number, :user_id], :category_attributes => [:name, :user_id])
+def appointment_params
+      params.require(:appointment).permit(:name, :start_time, :end_time, :price, :customer_id, :category_id, :user_id, :customer_attributes => [:first_name, :last_name, :email, :phone_number, :user_id], :category_attributes => [:name, :user_id])
 end
 ```
 
@@ -285,13 +287,13 @@ I added a bit to the new action in the Appointments controller. If a category_id
 
 ```
 def new 
-        if params[:category_id] && !Category.exists?(params[:category_id])
+      if params[:category_id] && !Category.exists?(params[:category_id])
             redirect_to categories_path, alert: "Category not found"
-        elsif params[:customer_id] && !Customer.exists?(params[:customer_id])
+      elsif params[:customer_id] && !Customer.exists?(params[:customer_id])
             redirect_to customers_path, alert: "Customer not found"
-        else 
+      else 
             @appointment = Appointment.new(category_id: params[:category_id], customer_id: params[:customer_id], user_id: current_user.id)
-        end
+      end
 end
 ```
 
@@ -299,31 +301,31 @@ Then, I added a hidden field to the appointments form. This hidden field picks u
 
 ```
 <%= f.hidden_field :category_id %>
-    <%= f.hidden_field :customer_id %>
-    <%= f.hidden_field :user_id %>
+<%= f.hidden_field :customer_id %>
+<%= f.hidden_field :user_id %>
 ```
 
 The last items I worked on were views. I added many helper methods to manipulate the datetime for Appointment :date, :start_time and :end_time. Because the methods were only needed for views, I added them to the appointment_helper.rb file (reminder – separation of concerns). Luckily for all of us, Rails Action View Forms have a lot of convenient methods to take advantage of, such as number_to_currency or number_to_phone. 
 
 ```
 def time(appointment)
-        appointment.start_time.strftime('%I:%M%P')
+      appointment.start_time.strftime('%I:%M%P')
 end
  
 def date(appointment)
-        appointment.start_time.strftime("%A") + " " + appointment.start_time.strftime("%m/%d/%Y")
+      appointment.start_time.strftime("%A") + " " + appointment.start_time.strftime("%m/%d/%Y")
 end
 
 def date_time(appointment)
-        date(appointment) + " " + time(appointment)
+      date(appointment) + " " + time(appointment)
 end
 
 def price(appointment)
-        number_to_currency(appointment.price)
+      number_to_currency(appointment.price)
 end
 
 def appointment_name(appointment)
-        appointment.name.capitalize 
+      appointment.name.capitalize 
 end
 ```
 
