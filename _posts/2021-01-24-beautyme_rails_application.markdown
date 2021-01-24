@@ -8,7 +8,7 @@ permalink:  beautyme_rails_application
 
 To complete the requirements for the third module of Flatiron’s program, I decided to create a Rails application based on scheduling for beauticians, stylists, salon owners, etc. This application allows Users (stylists) to create Customers, create Categories and Appointments for their Customers. I designed BeautyME using the MVC (model, view, controller) framework. The MVC Framework is used to separate concerns between the login (models), the views (user interaction) and the controller (routes). 
 
-After using the Rails app generator ($ rails new) to build the base of the application, I ensured the Gem file had everything it needed to make BeautyMe run smoothly. 
+After using the Rails app generator (```$ rails new```) to build the base of the application, I ensured the Gem file had everything it needed to make BeautyMe run smoothly. 
 
 The pre-configured Gem file included Rails, ActiveRecord, and Bcrypt. I added Simple Calendar (to easily display a calendar), Pry, Omniauth (for logging in via Facebook), Omniauth-Facebook and Dotenv-Rails. 
 
@@ -278,8 +278,10 @@ These routes allowed the :show views for Customers and Categories to have nested
 
 Another step I had to take was adding the new nested paths that were provided by the above routes. Nesting the routes in the routes file provided me with access to new paths such as category_customer_path, category_appointment_path, customer_appointment_path, new_customer_category_path. These helped me easily redirect the user to a nested path. 
 
+```
 link_to customer_name(customer), category_customer_path(@category, customer)
 link_to appointment_name(appointment), category_appointment_path(@category, appointment)
+```
 
 A little extra work was still needed to make the :new nested routes for Appointments.  Of course, it was not difficult to have the Customer and Category :show pages lead to a new appointment form but, I needed to ensure the customer_id or category_id were automatically assigned to the appointment once the new form was displayed. Because the link to the :new Appointment form from the Customer and Category :show page was using a new_path (new_customer_appointment_path, new_category_appointment_path), a customer_id and category_id were being added to the params. 
 
