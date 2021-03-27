@@ -1,7 +1,7 @@
 ---
 layout: post
 title:      "JavaScript & Memory Games"
-date:       2021-03-27 00:09:28 +0000
+date:       2021-03-26 20:09:28 -0400
 permalink:  javascript_and_memory_games
 ---
 
