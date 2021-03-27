@@ -28,8 +28,7 @@ def change
 
       t.timestamps
     end
-  end
-```
+  end ```
 
 I order to associate Games with Users, I created a has_many relationship and set user_id as the foreign key in the Games table. This association between User and Game allows the model objects to understand they belong to one another or have many of another object. 
 
