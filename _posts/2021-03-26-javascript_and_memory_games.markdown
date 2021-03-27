@@ -105,7 +105,8 @@ static userFormEventListener() {
 
     static assignUser(user){
         currentUser = new User(user.username, user.id, user.games)
-    } ```
+    } 
+```
 
 
 Once the user is created on the backend and the frontend, the startGame() function is called. When a user is not logged in, the board is frozen and no cards will flip over. Once the User has logged in, the variable ‘frozen’ is set to false allowing the cards to move. 
@@ -140,7 +141,8 @@ static insertFastestScores() {
     static userFastestGame(){
         currentUserGames = allGames.filter(game => game.user.username === username)
         userMin = Math.min.apply(Math, currentUserGames.map(game => {return game.score == null ? Infinity : game.score;}))
-    } ```
+    }
+```
 
 
 
@@ -243,7 +245,7 @@ Once the endgame() function has been called, it fetches to the backend API to pa
             currentGame.score = game.score
         })
     }
-		```
+```
 
 
 Once the scores are updated and the patch request is completed, the startOver() function is called and refreshes the board. In order to do so, it changes all class names of the <div> cards to “memory-card” resulting in the front image of the card to be shown. createGame() is called upon and the process starts over. 
