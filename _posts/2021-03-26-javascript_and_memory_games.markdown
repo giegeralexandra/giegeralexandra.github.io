@@ -43,7 +43,8 @@ end
 class User < ApplicationRecord
     has_many :games
 
-end```
+end
+```
 
 Because I am using Rails backend API to connect to the frontend of the application, it was important for me to implement a serializer service class for both Game and User. I decided to use the Active Model Serializers gem to assist. Once the gem was downloaded, it was very easy and flexible to get my serializers prepared. I entered the data I needed to be serialized when fetching the data from the frontend and left behind the extra data that was not necessary. 
 
