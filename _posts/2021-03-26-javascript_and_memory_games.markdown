@@ -106,8 +106,7 @@ static userFormEventListener() {
 
     static assignUser(user){
         currentUser = new User(user.username, user.id, user.games)
-    }
-		```
+    } ```
 
 
 Once the user is created on the backend and the frontend, the startGame() function is called. When a user is not logged in, the board is frozen and no cards will flip over. Once the User has logged in, the variable ‘frozen’ is set to false allowing the cards to move. 
@@ -142,8 +141,7 @@ static insertFastestScores() {
     static userFastestGame(){
         currentUserGames = allGames.filter(game => game.user.username === username)
         userMin = Math.min.apply(Math, currentUserGames.map(game => {return game.score == null ? Infinity : game.score;}))
-    }
-```
+    } ```
 
 
 
