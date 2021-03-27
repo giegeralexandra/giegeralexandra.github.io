@@ -10,8 +10,7 @@ In module 4 of Software Engineering Bootcamp at Flatiron School, I was required 
 
 The first step in my project was to create the rails backend application. By running rails new memory_game, Rails created the basic structure for my backend application, including the ActiveRecord Gem. I then created 2 different migrations, one for Users and one for Games.
  
-```
-def change
+``` def change
     create_table :users do |t|
       t.string :username
 
