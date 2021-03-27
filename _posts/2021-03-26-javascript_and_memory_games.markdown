@@ -29,7 +29,7 @@ def change
       t.timestamps
     end
   end
-	```
+```
 
 I order to associate Games with Users, I created a has_many relationship and set user_id as the foreign key in the Games table. This association between User and Game allows the model objects to understand they belong to one another or have many of another object. 
 
@@ -144,7 +144,7 @@ static insertFastestScores() {
         currentUserGames = allGames.filter(game => game.user.username === username)
         userMin = Math.min.apply(Math, currentUserGames.map(game => {return game.score == null ? Infinity : game.score;}))
     }
-		```
+```
 
 
 
@@ -174,7 +174,7 @@ static setCurrentGame(game){
         currentGame = new Game(game.id, game.start_time, game.user_id)
 
     }
-	```
+```
 
 Once the game is created, a function activateCardsListener() is called. This goes through each of the <div> cards and adds a ‘click’ event listener. The event listener does a few things. Once a card is clicked, if the user is signed in and the board is not frozen, the click will result in the card class name to toggle between “memory-card” and “memory-card flip”. If the card that is clicked upon is not flipped over, the card will be assigned to a variable called “firstCard”. If the next click is not the same card, the card will be assigned to a variable secondCard. The function will then check to see if the cards are a match or if all cards have been flipped over. If the cards are a match, they will stay frozen on the back side image and the player can select additional cards. If all cards have been turned over, the endgame() function will be called. 
 
@@ -201,7 +201,7 @@ static activateCardsListener() {
         }
 
     }
-		```
+```
 
 Once the endgame() function has been called, it fetches to the backend API to patch the new score. Using a fetch to (`http://localhost:3000/games/${currentGame.id}`), the function updates the attribute score of the current game on the backend as well as on the frontEnd. The window is then alerted that the game is over and the final score is pasted to the nav bar. The fastest scores on the nav bar are updated if necessary. 
 
