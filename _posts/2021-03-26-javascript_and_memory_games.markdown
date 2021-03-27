@@ -83,7 +83,7 @@ static userFormEventListener() {
         })
     }
 
-    static submitUser(data){
+static submitUser(data){
         fetch(usersUrl, {
             method: "POST", 
             headers: {
@@ -104,7 +104,7 @@ static userFormEventListener() {
         
     }
 
-    static assignUser(user){
+static assignUser(user){
         currentUser = new User(user.username, user.id, user.games)
     } 
 ```
@@ -135,11 +135,11 @@ static insertFastestScores() {
         },800)
     }
 
-    static fastestGame(){
+static fastestGame(){
         gameMin = Math.min.apply(Math, allGames.map(game => {return game.score == null ? Infinity : game.score;}))
     }
 
-    static userFastestGame(){
+static userFastestGame(){
         currentUserGames = allGames.filter(game => game.user.username === username)
         userMin = Math.min.apply(Math, currentUserGames.map(game => {return game.score == null ? Infinity : game.score;}))
     }
@@ -168,7 +168,7 @@ static createGame(){
             Game.setCurrentGame(game);
         })
     }
-
+		
 static setCurrentGame(game){
         currentGame = new Game(game.id, game.start_time, game.user_id)
 
@@ -182,7 +182,7 @@ static activateCardsListener() {
         cards.forEach(card => card.addEventListener('click', Game.flipCard.bind(card)));
     }
 
-    static flipCard() {
+static flipCard() {
         if (!signedIn){return;} //dont give flip card access if not signed in
         if (frozen){return}; //give flip card access if frozen 
         this.classList.toggle('flip')
@@ -205,7 +205,7 @@ static activateCardsListener() {
 Once the endgame() function has been called, it fetches to the backend API to patch the new score. Using a fetch to (`http://localhost:3000/games/${currentGame.id}`), the function updates the attribute score of the current game on the backend as well as on the frontEnd. The window is then alerted that the game is over and the final score is pasted to the nav bar. The fastest scores on the nav bar are updated if necessary. 
 
 ```
-  static checkForGameOver(){
+static checkForGameOver(){
         let cardsLeft = 0; 
         cards.forEach(card=>{
             if (card.className === "memory-card"){
@@ -217,7 +217,7 @@ Once the endgame() function has been called, it fetches to the backend API to pa
         }
     }
 
-    static endGame(){
+static endGame(){
         this.updateScore();
         setTimeout( () => {
             window.alert(`Game Over! Final Time: ${currentGame.score} seconds`)
@@ -228,7 +228,7 @@ Once the endgame() function has been called, it fetches to the backend API to pa
             Game.startOver()}, 6000)
     }
 
-    static updateScore(){
+ static updateScore(){
         let newData = {
             end_time: new Date(),
         }
