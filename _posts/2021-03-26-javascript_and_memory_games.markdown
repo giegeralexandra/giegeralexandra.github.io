@@ -10,7 +10,7 @@ In module 4 of Software Engineering Bootcamp at Flatiron School, I was required 
 
 The first step in my project was to create the rails backend application. By running rails new memory_game, Rails created the basic structure for my backend application, including the ActiveRecord Gem. I then created 2 different migrations, one for Users and one for Games.
  
-``` def change
+```def change
     create_table :users do |t|
       t.string :username
 
@@ -27,7 +27,7 @@ The first step in my project was to create the rails backend application. By run
 
       t.timestamps
     end
-  end ```
+  end```
 
 
 I order to associate Games with Users, I created a has_many relationship and set user_id as the foreign key in the Games table. This association between User and Game allows the model objects to understand they belong to one another or have many of another object. 
