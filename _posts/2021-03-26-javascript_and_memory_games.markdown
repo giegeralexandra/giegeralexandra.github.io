@@ -1,6 +1,6 @@
 ---
 layout: post
-title:      "JavaScript & Memory Games"
+title:      "JavaScript & Memory Games "
 date:       2021-03-26 20:09:28 -0400
 permalink:  javascript_and_memory_games
 ---
