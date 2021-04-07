@@ -26,7 +26,8 @@ class UserSerializer < ActiveModel::Serializer
     attributes :username, :id
   
     has_many :games 
-end```
+end
+```
  
 The next step was creating the routes in my config file and actions in my controllers. I needed an index, show, create for User and an index, new, create, show, edit, and update for Games.
 
