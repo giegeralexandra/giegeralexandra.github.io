@@ -31,12 +31,6 @@ end
  
 The next step was creating the routes in my config file and actions in my controllers. I needed an index, show, create for User and an index, new, create, show, edit, and update for Games.
 
-```
-Rails.application.routes.draw do
-  resources :users
-  resources :games
-end
-```
 
 After I finished setting up the basics of my Ruby Rails backend, it was time for me to move on to the frontend of the application. I started off by creating the User entry form. It was important that each player logged in prior to playing so that the final scores could be saved. Once the form was finished in the index.html file, I needed to grab the information, and post it to the rails API. To do this, I created a User Class in my index.js file and used three static functions to fetch the API and POST the new User data to my database. userFormEventListener() adds a ‘click’ event listener to the submit button on the form. Once it is clicked, it grabs the username entered, sets it to variable ‘username’  and then sends the data to the submitUser() function. The submitUser() function fetches the usersUrl, posts the data to the create route on the User Controller and creates or finds an existing user. Once that is complete, I took the promise response, turned it into a json object . From there, I created a new User object in the User class and assigned it to the variable currentUser.
 
