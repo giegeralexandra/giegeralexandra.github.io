@@ -9,26 +9,6 @@ permalink:  javascript_and_memory_games
 In module 4 of Software Engineering Bootcamp at Flatiron School, I was required to create a single page application using CSS, HTML, JavaScript, Ruby and Rails. I decided to make a memory game for my project consisting of 9 pairs of cards. 
 
 The first step in my project was to create the rails backend application. By running rails new memory_game, Rails created the basic structure for my backend application, including the ActiveRecord Gem. I then created 2 different migrations, one for Users and one for Games.
- 
-```
-def change
-    create_table :users do |t|
-      t.string :username
-
-      t.timestamps
-    end
-  end
-
- def change
-    create_table :games do |t|
-      t.integer :user_id
-      t.integer :score
-      t.datetime  :start_time
-      t.datetime :end_time
-
-      t.timestamps
-    end
-  end```
 
 
 I order to associate Games with Users, I created a has_many relationship and set user_id as the foreign key in the Games table. This association between User and Game allows the model objects to understand they belong to one another or have many of another object. 
@@ -46,7 +26,7 @@ class User < ApplicationRecord
 end
 ```
 
-Because I am using Rails backend API to connect to the frontend of the application, it was important for me to implement a serializer service class for both Game and User. I decided to use the Active Model Serializers gem to assist. Once the gem was downloaded, it was very easy and flexible to get my serializers prepared. I entered the data I needed to be serialized when fetching the data from the frontend and left behind the extra data that was not necessary. 
+Because I am using Rails backend API to connect to the frontend of the application, it was important for me to implement a serializer service class for both Game and User. I decided to use the Active Model Serializers gem to assist. Once the gem was downloaded, it was very easy and flexible to get my serializers prepared. I entered the data needed when fetching from the frontend and left behind the extra data that was not necessary. 
 
 ```
 class GameSerializer < ActiveModel::Serializer
@@ -61,7 +41,7 @@ class UserSerializer < ActiveModel::Serializer
     has_many :games 
 end```
  
-The next step was creating the routes in my config file and controllers. I needed an index, show, create for User and an index, new, create, show, edit, and update for Games.
+The next step was creating the routes in my config file and actions in my controllers. I needed an index, show, create for User and an index, new, create, show, edit, and update for Games.
 
 ```
 Rails.application.routes.draw do
@@ -70,7 +50,7 @@ Rails.application.routes.draw do
 end
 ```
 
-After I finished setting up the basics of my Ruby Rails backend, it was time for me to move on to the frontend of the application. I started off by creating the User entry form. It was important that each player logged in prior to playing so that the final scores could be saved. Once the form was finished in the index.html file, I needed to grab the information, and post it to the rails API. To do this, I created a User Class in my index.js file and used three static functions to fetch the API and POST the new User data to my database. userFormEventListener() adds a ‘click’ event listener to the submit button on the form. Once it is clicked, it grabs the username entered, sets it to variable ‘username’  and then sends the data to the submitUser() function. The submitUser() function fetches the usersUrl, posts the data to the create route on the User Controller and creates or finds an existing user. Once that is complete, I took the response, turned it into a json string, then into an object . From there, I created a new User object in the User class and assigned it to the variable currentUser.
+After I finished setting up the basics of my Ruby Rails backend, it was time for me to move on to the frontend of the application. I started off by creating the User entry form. It was important that each player logged in prior to playing so that the final scores could be saved. Once the form was finished in the index.html file, I needed to grab the information, and post it to the rails API. To do this, I created a User Class in my index.js file and used three static functions to fetch the API and POST the new User data to my database. userFormEventListener() adds a ‘click’ event listener to the submit button on the form. Once it is clicked, it grabs the username entered, sets it to variable ‘username’  and then sends the data to the submitUser() function. The submitUser() function fetches the usersUrl, posts the data to the create route on the User Controller and creates or finds an existing user. Once that is complete, I took the promise response, turned it into a json object . From there, I created a new User object in the User class and assigned it to the variable currentUser.
 
 ```
 static userFormEventListener() {
@@ -203,7 +183,7 @@ static flipCard() {
     }
 ```
 
-Once the endgame() function has been called, it fetches to the backend API to patch the new score. Using a fetch to (`http://localhost:3000/games/${currentGame.id}`), the function updates the attribute score of the current game on the backend as well as on the frontEnd. The window is then alerted that the game is over and the final score is pasted to the nav bar. The fastest scores on the nav bar are updated if necessary. 
+Once the endgame() function has been called, it fetches to the backend API to patch the new score. Using a fetch to (http://localhost:3000/games/${currentGame.id}), the function updates the attribute score of the current game on the backend as well as on the frontEnd. The window is then alerted that the game is over and the final score is pasted to the nav bar. The fastest scores on the nav bar are updated if necessary. 
 
 ```
 static checkForGameOver(){
