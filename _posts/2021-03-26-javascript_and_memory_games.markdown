@@ -13,19 +13,6 @@ The first step in my project was to create the rails backend application. By run
 
 I order to associate Games with Users, I created a has_many relationship and set user_id as the foreign key in the Games table. This association between User and Game allows the model objects to understand they belong to one another or have many of another object. 
 
-
-```
-class Game < ApplicationRecord
-    belongs_to :user
-
-end
-
-class User < ApplicationRecord
-    has_many :games
-
-end
-```
-
 Because I am using Rails backend API to connect to the frontend of the application, it was important for me to implement a serializer service class for both Game and User. I decided to use the Active Model Serializers gem to assist. Once the gem was downloaded, it was very easy and flexible to get my serializers prepared. I entered the data needed when fetching from the frontend and left behind the extra data that was not necessary. 
 
 ```
