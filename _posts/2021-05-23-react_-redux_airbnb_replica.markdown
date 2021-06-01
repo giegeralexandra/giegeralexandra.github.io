@@ -63,7 +63,10 @@ end
 
 ```
 
+The next step was to associate my models to one another. Using Rails associations, my model objects are able to understand they belong to one another or have many of another object. Each user has_many reservations, rentals and trips. Each reservation belongs_to a rental and to a user as a "guest". A rental has_many guests through reservations. The Trip table is used as the join table bringing all the models together. 
 
+
+Because I am using Rails backend API to connect to the frontend of the application, it was important for me to implement a serializer service class for all of my models. I decided to use the Active Model Serializers gem to assist. Once the gem was downloaded, it was very easy and flexible to get my serializers prepared. I entered the data needed when fetching from the frontend and left behind the extra data that was not necessary.
 
 
 
